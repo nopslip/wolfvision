@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: TokenDistributorV2
@@ -8,7 +8,7 @@ dataSources:
     source:
       address: "0xa4c8B8a59805F6B049b977296881CE76f538D7C4"
       abi: TokenDistributorV2
-      startBlock: 7452309 
+      startBlock: 7452309
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -17,8 +17,8 @@ dataSources:
         - Claimed
       abis:
         - name: TokenDistributorV2
-          file: ./abis/TokenDistributorV2.json
+          file: TokenDistributorV2/abis/TokenDistributorV2.json
       eventHandlers:
         - event: Claimed(uint256,address,uint256)
           handler: handleClaimed
-      file: ./src/mapping.ts
+      file: TokenDistributorV2/TokenDistributorV2.wasm

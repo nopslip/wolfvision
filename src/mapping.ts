@@ -3,9 +3,35 @@ import {
   TokenDistributorV2,
   Claimed
 } from "../generated/TokenDistributorV2/TokenDistributorV2"
-import { ExampleEntity } from "../generated/schema"
+//import { ExampleEntity } from "../generated/schema"
+import { TokenClaim } from "../generated/schema"
 
-export function handleClaimed(event: Claimed): void {
+export function handleClaimed(event: Claimed): void { 
+  let entity = TokenClaim.load(event.transaction.from.toHex())
+
+  // if entity doesn't exist, create 
+  if (entity == null) {
+    entity = new TokenClaim(event.transaction.from.toHex())
+  
+    // start a counter 
+    entity.count = BigInt.fromI32(0)
+  }
+  
+  // bump the counter up one 
+  entity.count = entity.count + BigInt.fromI32(1)
+  
+  // Entity fields can be set based on event parameters
+  entity.index = event.params.index
+  entity.account = event.params.account
+  entity.amount = event.params.amount
+  
+  entity.save()
+
+
+}
+
+/** 
+export function handleClaimed_example(event: Claimed): void {
   // Entities can be loaded from the store using a string ID; this ID
   // needs to be unique across all entities of the same type
   let entity = ExampleEntity.load(event.transaction.from.toHex())
@@ -25,6 +51,8 @@ export function handleClaimed(event: Claimed): void {
   // Entity fields can be set based on event parameters
   entity.index = event.params.index
   entity.account = event.params.account
+  entity.user_account = event.params.user_account
+
 
   // Entities can be written to the store with `.save()`
   entity.save()
@@ -51,3 +79,4 @@ export function handleClaimed(event: Claimed): void {
   // - contract.signer(...)
   // - contract.token(...)
 }
+*/
