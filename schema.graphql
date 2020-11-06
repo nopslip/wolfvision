@@ -11,3 +11,9 @@ type VestingGrant @entity {
   recipient: Bytes!
   vesting_id: BigInt
 }
+type TokenTransfer @entity {
+  id: ID!
+  from: Bytes!
+  to: Bytes!
+  amount: BigInt!
+}

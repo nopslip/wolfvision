@@ -21,7 +21,7 @@ dataSources:
       eventHandlers:
         - event: Claimed(uint256,address,uint256)
           handler: handleClaimed_2
-      file: ./src/mapping.ts
+      file: ./src/tokendistributor-mapping.ts
   - kind: ethereum/contract
     name: TokenVesting
     network: rinkeby
@@ -59,6 +59,36 @@ dataSources:
           handler: handleRoleGranted
         - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
           handler: handleRoleRevoked
-      file: ./src/mapping.ts
-
-      
+      file: ./src/tokenvesting-mapping.ts
+  - kind: ethereum/contract
+    name: WOLFV2
+    network: rinkeby
+    source:
+      address: "0x4193f0e524B396E6291461c58948Ab48B2B8e52a"
+      abi: WOLFV2
+      startBlock: 7452244
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - DelegateChanged
+        - DelegateVotesChanged
+        - MinterChanged
+        - Transfer
+      abis:
+        - name: WOLFV2
+          file: ./abis/WOLFV2.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: DelegateChanged(indexed address,indexed address,indexed address)
+          handler: handleDelegateChanged
+        - event: DelegateVotesChanged(indexed address,uint256,uint256)
+          handler: handleDelegateVotesChanged
+        - event: MinterChanged(address,address)
+          handler: handleMinterChanged
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/wolfv2-mapping.ts    
