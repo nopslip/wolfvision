@@ -51,13 +51,13 @@ export class TokenClaim extends Entity {
     this.set("count", Value.fromBigInt(value));
   }
 
-  get index(): BigInt {
-    let value = this.get("index");
+  get user_id(): BigInt {
+    let value = this.get("user_id");
     return value.toBigInt();
   }
 
-  set index(value: BigInt) {
-    this.set("index", Value.fromBigInt(value));
+  set user_id(value: BigInt) {
+    this.set("user_id", Value.fromBigInt(value));
   }
 
   get account(): Bytes {
@@ -76,5 +76,63 @@ export class TokenClaim extends Entity {
 
   set amount(value: BigInt) {
     this.set("amount", Value.fromBigInt(value));
+  }
+}
+
+export class VestingGrant extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save VestingGrant entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save VestingGrant entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("VestingGrant", id.toString(), this);
+  }
+
+  static load(id: string): VestingGrant | null {
+    return store.get("VestingGrant", id) as VestingGrant | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get count(): BigInt {
+    let value = this.get("count");
+    return value.toBigInt();
+  }
+
+  set count(value: BigInt) {
+    this.set("count", Value.fromBigInt(value));
+  }
+
+  get recipient(): Bytes {
+    let value = this.get("recipient");
+    return value.toBytes();
+  }
+
+  set recipient(value: Bytes) {
+    this.set("recipient", Value.fromBytes(value));
+  }
+
+  get vesting_id(): BigInt {
+    let value = this.get("vesting_id");
+    return value.toBigInt();
+  }
+
+  set vesting_id(value: BigInt) {
+    this.set("vesting_id", Value.fromBigInt(value));
   }
 }

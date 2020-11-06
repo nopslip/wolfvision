@@ -20,5 +20,43 @@ dataSources:
           file: TokenDistributorV2/abis/TokenDistributorV2.json
       eventHandlers:
         - event: Claimed(uint256,address,uint256)
-          handler: handleClaimed
+          handler: handleClaimed_2
+      file: TokenDistributorV2/TokenDistributorV2.wasm
+  - kind: ethereum/contract
+    name: TokenVesting
+    network: rinkeby
+    source:
+      address: "0xF30e3409e5BC49c0583a684847c9efd2B6efDD79"
+      abi: TokenVesting
+      startBlock: 7501769
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ChangedMultisig
+        - GrantAdded
+        - GrantRemoved
+        - GrantTokensClaimed
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+      abis:
+        - name: TokenVesting
+          file: TokenVesting/abis/TokenVesting.json
+      eventHandlers:
+        - event: ChangedMultisig(address)
+          handler: handleChangedMultisig
+        - event: GrantAdded(indexed address,uint256)
+          handler: handleGrantAdded
+        - event: GrantRemoved(address,uint256,uint256)
+          handler: handleGrantRemoved
+        - event: GrantTokensClaimed(indexed address,uint256)
+          handler: handleGrantTokensClaimed
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
       file: TokenDistributorV2/TokenDistributorV2.wasm

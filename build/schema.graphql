@@ -1,7 +1,13 @@
 type TokenClaim @entity {
   id: ID!
   count: BigInt!
-  index: BigInt! # uint256 
+  user_id: BigInt! # uint256 
   account: Bytes! # address
   amount: BigInt! # claim amount in WEI
+}
+type VestingGrant @entity {
+  id: ID!
+  count: BigInt!
+  recipient: Bytes!
+  vesting_id: BigInt
 }
